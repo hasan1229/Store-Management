@@ -1,24 +1,27 @@
-// components/ProductList.js
+// components/ProductList.js 
+
 import React from 'react';
 
-const ProductList = ({ products }) => (
+const PurchaseList = ({ purchases }) => (
     <div>
-        <h2>Product List</h2>
+        <h2>Purchase List</h2>
         <table>
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>product name</th>
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                {products.map((product) => (
-                    <tr key={product.id}>
-                        <td>{product.name}</td>
-                        <td>{product.price}</td>
-                        <td>{product.quantity}</td>
+                {purchases.map((purchase) => (
+                    <tr key={purchase.id}>
+                        <td>{purchase.name}</td>
+                        <td>{purchase.name}</td>
+                        <td>{purchase.price}</td>
+                        <td>{purchase.quantity}</td>
                         <td>
                             <button>Edit</button>
                             <button>Delete</button>
@@ -30,4 +33,4 @@ const ProductList = ({ products }) => (
     </div>
 );
 
-export default ProductList;
+export default PurchaseList;

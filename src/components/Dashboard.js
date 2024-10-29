@@ -21,7 +21,21 @@ return (
             <Link to="/add-product" className="dashboard-button">Add Product</Link>
             <Link to="/sell" className="dashboard-button">Sell</Link>
             <Link to="/sales-report" className="dashboard-button">Sales Report</Link>
+            
+            <Link to="/purchase"> <button className="dashboard-button">Purchase</button></Link>
+            <Link to="/purchaselist">
+                    <button className="dashboard-button">Purchase List</button>
+                </Link>
+
+                <Link to="/AddClient">
+                    <button className="dashboard-button">Add Client</button>
+                </Link>   
+                <Link to="/Purchase2">
+                    <button className="dashboard-button">Purchase2</button>
+                </Link>  
+        
         </div>
+
     </div>
 );
 
