@@ -1,73 +1,68 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+const AddProduct = ({ onAddProduct, onCancel }) => {
+    const [products, setProducts] = useState([{ productType: 'bar phone', productName: '' }]);
 
-const AddProduct = ({ onAddProduct }) => {
-    const [products, setProducts] = useState([{ productType: '', productName: '' }]);
-    const [isAddingProduct, setIsAddingProduct] = useState(false); // Track adding products
-
-    const handleAddProduct = (e) => {
-        e.preventDefault();
-        products.forEach((product) => {
-            console.log('Adding product:', product); // Log each product being added
-            onAddProduct(product); // Call the function passed from parent
-        });
-        setProducts([{ productType: '', productName: '' }]); // Reset to initial state
-        setIsAddingProduct(false); // Reset adding state
-    };
-
-    const handleChangeProduct = (index, field, value) => {
+    const handleChange = (index, field, value) => {
         const newProducts = [...products];
         newProducts[index][field] = value;
         setProducts(newProducts);
     };
 
-    const handleAddAnotherProduct = () => {
-        setProducts([...products, { productType: '', productName: '' }]);
-        setIsAddingProduct(true); // Set to true when adding a new product
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        products.forEach(product => {
+            if (product.productName.trim()) {
+                onAddProduct(product);
+            }
+        });
+        setProducts([{ productType: 'bar phone', productName: '' }]); // Reset to initial state
     };
 
-    const handleCancelAddProduct = () => {
+    const handleAddAnother = () => {
+        setProducts([...products, { productType: 'bar phone', productName: '' }]);
+    };
+
+    const handleCancelLast = () => {
         if (products.length > 1) {
-            setProducts(products.slice(0, -1)); // Remove the last entry
-        } else {
-            setProducts([{ productType: '', productName: '' }]); // Reset to initial state if no more entries
-            setIsAddingProduct(false); // Hide Cancel button
+            setProducts(products.slice(0, -1)); // Remove the last product entry
         }
     };
 
     return (
         <div>
             <h2>Add Product</h2>
-            <form onSubmit={handleAddProduct}>
+            <form onSubmit={handleSubmit}>
                 {products.map((product, index) => (
-                    <div key={index} style={{ marginBottom: '10px' }}>
-                        <label>Product Type:</label>
-                        <select
-                            value={product.productType}
-                            onChange={(e) => handleChangeProduct(index, 'productType', e.target.value)}
-                            required
-                        >
-                            <option value="">Select Product Type</option>
-                            <option value="Bar Phone">Bar Phone</option>
-                            <option value="Smart Phone">Smart Phone</option>
-                        </select>
-                        <label>Product Name:</label>
-                        <input
-                            type="text"
-                            placeholder="Enter Product Name"
-                            value={product.productName}
-                            onChange={(e) => handleChangeProduct(index, 'productName', e.target.value)}
-                            required
-                        />
+                    <div key={index}>
+                        <label>
+                            Product Type:
+                            <select
+                                value={product.productType}
+                                onChange={(e) => handleChange(index, 'productType', e.target.value)}
+                            >
+                                <option value="bar phone">Bar Phone</option>
+                                <option value="smartphone">Smartphone</option>
+                            </select>
+                        </label>
+                        <label>
+                            Product Name:
+                            <input
+                                type="text"
+                                value={product.productName}
+                                onChange={(e) => handleChange(index, 'productName', e.target.value)}
+                                required
+                            />
+                        </label>
                     </div>
                 ))}
-                <button type="button" onClick={handleAddAnotherProduct}>
-                    Add Another Product
-                </button>
-                {isAddingProduct && ( // Show Cancel button only when adding products
-                    <button type="button" onClick={handleCancelAddProduct}>Cancel</button>
-                )}
-                <button type="submit">Submit Products</button>
+                <div>
+                    <button type="submit">Submit</button>
+                    <button type="button" onClick={handleCancelLast}>Cancel Last Product</button>
+                    <button type="button" onClick={handleAddAnother}>Add Another Product</button>
+                </div>
             </form>
+            <Link to="/product-list" className="button">Product List</Link>
         </div>
     );
 };
