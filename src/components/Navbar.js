@@ -13,6 +13,7 @@ const Navbar = () => {
                 <li><Link to="/product-list">Product List</Link></li>
                 <li><Link to="/add-client">Add Client</Link></li>
                 <li><Link to="/purchase-list">Purchase List</Link></li>
+                <li><Link to="/add-executive">executive</Link></li>
             </ul>
         </nav>
     );

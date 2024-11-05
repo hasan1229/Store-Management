@@ -8,13 +8,15 @@ import AddClient from './components/AddClient';
 import ClientList from './components/ClientList';
 import Purchase from './components/Purchase';
 import PurchaseList from './components/PurchaseList'; // Import PurchaseList component
+import AddExecutive from './components/AddExecutive';
+import ExecutiveList from './components/ExecutiveList';
 import './styles.css';
 
 function App() {
     const [products, setProducts] = useState([]);        // Holds the list of products
     const [clients, setClients] = useState([]);          // Holds the list of clients
     const [purchases, setPurchases] = useState([]);      // Holds the list of purchases
-
+    const [executives, setExecutives] = useState([]); 
     // Function to add new purchases
     const handleAddPurchase = (newPurchases) => {
         setPurchases((prevPurchases) => [...prevPurchases, ...newPurchases]);
@@ -40,6 +42,14 @@ function App() {
     const handleDeleteClient = (index) => {
         const newClients = clients.filter((_, i) => i !== index);
         setClients(newClients);
+    };
+     // Function to add a Executive
+     const handleAddExecutive = (executive) => {
+        setExecutives((prevExecutives) => [...prevExecutives, executive]);
+    };
+    const handleDeleteExecutive = (index) => {
+        const newExecutives = executives.filter((_, i) => i !== index);
+        setExecutives(newExecutives);
     };
 
     return (
@@ -75,6 +85,14 @@ function App() {
                     <Route 
                         path="/client-list" 
                         element={<ClientList clients={clients} onDeleteClient={handleDeleteClient} />} 
+                    />
+                    <Route 
+                        path="/add-executive" 
+                        element={<AddExecutive onAddExecutive={handleAddExecutive} onCancel={() => {}} />} 
+                    />
+                    <Route 
+                        path="/executive-list" 
+                        element={<ExecutiveList executives={executives} onDeleteExecutive={handleDeleteExecutive} />} 
                     />
 
                     {/* Purchase Route */}
