@@ -6,8 +6,10 @@ import AddProduct from './components/AddProduct';
 import ProductList from './components/ProductList';
 import AddClient from './components/AddClient';
 import ClientList from './components/ClientList';
+import AddCustomer from './components/AddCustomer';  // Added AddCustomer import
+import CustomerList from './components/CustomerList';  // Added CustomerList import
 import Purchase from './components/Purchase';
-import PurchaseList from './components/PurchaseList'; // Import PurchaseList component
+import PurchaseList from './components/PurchaseList';
 import AddExecutive from './components/AddExecutive';
 import ExecutiveList from './components/ExecutiveList';
 import './styles.css';
@@ -15,8 +17,10 @@ import './styles.css';
 function App() {
     const [products, setProducts] = useState([]);        // Holds the list of products
     const [clients, setClients] = useState([]);          // Holds the list of clients
+    const [customers, setCustomers] = useState([]);      // Holds the list of customers
     const [purchases, setPurchases] = useState([]);      // Holds the list of purchases
     const [executives, setExecutives] = useState([]); 
+
     // Function to add new purchases
     const handleAddPurchase = (newPurchases) => {
         setPurchases((prevPurchases) => [...prevPurchases, ...newPurchases]);
@@ -43,10 +47,24 @@ function App() {
         const newClients = clients.filter((_, i) => i !== index);
         setClients(newClients);
     };
-     // Function to add a Executive
-     const handleAddExecutive = (executive) => {
+
+    // Function to add a customer
+    const handleAddCustomer = (customer) => {
+        setCustomers((prevCustomers) => [...prevCustomers, customer]);
+    };
+
+    // Function to delete a customer by index
+    const handleDeleteCustomer = (index) => {
+        const newCustomers = customers.filter((_, i) => i !== index);
+        setCustomers(newCustomers);
+    };
+
+    // Function to add an executive
+    const handleAddExecutive = (executive) => {
         setExecutives((prevExecutives) => [...prevExecutives, executive]);
     };
+
+    // Function to delete an executive by index
     const handleDeleteExecutive = (index) => {
         const newExecutives = executives.filter((_, i) => i !== index);
         setExecutives(newExecutives);
@@ -59,7 +77,7 @@ function App() {
                 <Routes>
                     {/* Navigate to the dashboard by default */}
                     <Route path="/" element={<Navigate to="/dashboard" />} />
-                    
+
                     {/* Dashboard Route */}
                     <Route path="/dashboard" element={<Dashboard />} />
 
@@ -86,10 +104,26 @@ function App() {
                         path="/client-list" 
                         element={<ClientList clients={clients} onDeleteClient={handleDeleteClient} />} 
                     />
+
+                    {/* Add Customer Route */}
+                    <Route 
+                        path="/add-customer" 
+                        element={<AddCustomer onAddCustomer={handleAddCustomer} onCancel={() => {}} />}  // Added route for AddCustomer
+                    />
+
+                    {/* Customer List Route */}
+                    <Route 
+                        path="/customer-list" 
+                        element={<CustomerList customers={customers} onDeleteCustomer={handleDeleteCustomer} />}  // Added route for CustomerList
+                    />
+
+                    {/* Add Executive Route */}
                     <Route 
                         path="/add-executive" 
                         element={<AddExecutive onAddExecutive={handleAddExecutive} onCancel={() => {}} />} 
                     />
+
+                    {/* Executive List Route */}
                     <Route 
                         path="/executive-list" 
                         element={<ExecutiveList executives={executives} onDeleteExecutive={handleDeleteExecutive} />} 
