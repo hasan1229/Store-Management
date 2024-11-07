@@ -6,12 +6,14 @@ import AddProduct from './components/AddProduct';
 import ProductList from './components/ProductList';
 import AddClient from './components/AddClient';
 import ClientList from './components/ClientList';
-import AddCustomer from './components/AddCustomer';  // Added AddCustomer import
-import CustomerList from './components/CustomerList';  // Added CustomerList import
+import AddCustomer from './components/AddCustomer';
+import CustomerList from './components/CustomerList';
 import Purchase from './components/Purchase';
 import PurchaseList from './components/PurchaseList';
 import AddExecutive from './components/AddExecutive';
 import ExecutiveList from './components/ExecutiveList';
+import Sell from './components/Sell1';  // Import Sell component
+import SellProductList from './components/SellProductList';  // Import SellProductList component
 import './styles.css';
 
 function App() {
@@ -19,7 +21,8 @@ function App() {
     const [clients, setClients] = useState([]);          // Holds the list of clients
     const [customers, setCustomers] = useState([]);      // Holds the list of customers
     const [purchases, setPurchases] = useState([]);      // Holds the list of purchases
-    const [executives, setExecutives] = useState([]); 
+    const [executives, setExecutives] = useState([]);    // Holds the list of executives
+    const [sales, setSales] = useState([]);              // Holds the list of sales
 
     // Function to add new purchases
     const handleAddPurchase = (newPurchases) => {
@@ -70,6 +73,11 @@ function App() {
         setExecutives(newExecutives);
     };
 
+    // Function to add a sale
+    const handleAddSale = (sale) => {
+        setSales((prevSales) => [...prevSales, sale]);
+    };
+
     return (
         <Router>
             <div>
@@ -108,13 +116,13 @@ function App() {
                     {/* Add Customer Route */}
                     <Route 
                         path="/add-customer" 
-                        element={<AddCustomer onAddCustomer={handleAddCustomer} onCancel={() => {}} />}  // Added route for AddCustomer
+                        element={<AddCustomer onAddCustomer={handleAddCustomer} onCancel={() => {}} />}  
                     />
 
                     {/* Customer List Route */}
                     <Route 
                         path="/customer-list" 
-                        element={<CustomerList customers={customers} onDeleteCustomer={handleDeleteCustomer} />}  // Added route for CustomerList
+                        element={<CustomerList customers={customers} onDeleteCustomer={handleDeleteCustomer} />}  
                     />
 
                     {/* Add Executive Route */}
@@ -136,7 +144,7 @@ function App() {
                             <Purchase 
                                 products={products} 
                                 clients={clients} 
-                                onAddPurchase={handleAddPurchase}    // Pass the handleAddPurchase to update purchases
+                                onAddPurchase={handleAddPurchase}    
                                 onCancel={() => {}} 
                             />
                         } 
@@ -145,7 +153,26 @@ function App() {
                     {/* Purchase List Route */}
                     <Route 
                         path="/purchase-list" 
-                        element={<PurchaseList purchases={purchases} />}  // Pass purchases to display in PurchaseList
+                        element={<PurchaseList purchases={purchases} />}  
+                    />
+
+                    {/* Sell Route */}
+                    <Route 
+                        path="/sell" 
+                        element={
+                            <Sell 
+                                customers={customers} 
+                                executives={executives} 
+                                products={products} 
+                                onAddSale={handleAddSale}    // Pass handleAddSale to add sales
+                            />
+                        } 
+                    />
+
+                    {/* Sell Product List Route */}
+                    <Route 
+                        path="/sell-product-list" 
+                        element={<SellProductList sales={sales} />} // Pass sales data to SellProductList
                     />
                 </Routes>
             </div>
