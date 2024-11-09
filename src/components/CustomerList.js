@@ -1,6 +1,8 @@
+// src/components/CustomerList.js
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const CustomerList = ({ customers, onDeleteCustomer }) => {
+const CustomerList = ({ customers, onDeleteCustomer, onEditCustomer }) => {
     return (
         <div>
             <h2>Customer List</h2>
@@ -22,6 +24,7 @@ const CustomerList = ({ customers, onDeleteCustomer }) => {
                                 <td>{customer.address}</td>
                                 <td>
                                     <button onClick={() => onDeleteCustomer(index)}>Delete</button>
+                                    <Link to={`/edit-customer/${index}`}><button>Edit</button></Link>
                                 </td>
                             </tr>
                         ))

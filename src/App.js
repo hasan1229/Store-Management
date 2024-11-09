@@ -4,10 +4,12 @@ import Navbar from './components/Navbar';
 import Dashboard from './components/Dashboard';
 import AddProduct from './components/AddProduct';
 import ProductList from './components/ProductList';
+import EditProduct from './components/EditProduct';  // Import EditProduct component
 import AddClient from './components/AddClient';
 import ClientList from './components/ClientList';
 import AddCustomer from './components/AddCustomer';
 import CustomerList from './components/CustomerList';
+import EditCustomer from './components/EditCustomer';  // Import EditCustomer component
 import Purchase from './components/Purchase';
 import PurchaseList from './components/PurchaseList';
 import AddExecutive from './components/AddExecutive';
@@ -39,6 +41,14 @@ function App() {
         const newProducts = products.filter((_, i) => i !== index);
         setProducts(newProducts);
     };
+    // Function to update a product
+    const handleUpdateProduct = (id, updatedProduct) => {
+        const updatedProducts = products.map(product => 
+            product.id === id ? { ...product, ...updatedProduct } : product
+        );
+        setProducts(updatedProducts);
+    };
+
 
     // Function to add a client
     const handleAddClient = (client) => {
@@ -61,6 +71,12 @@ function App() {
         const newCustomers = customers.filter((_, i) => i !== index);
         setCustomers(newCustomers);
     };
+        // Function to update a customer
+        const handleUpdateCustomer = (index, updatedCustomer) => {
+            const updatedCustomers = [...customers];
+            updatedCustomers[index] = updatedCustomer;
+            setCustomers(updatedCustomers);
+        };
 
     // Function to add an executive
     const handleAddExecutive = (executive) => {
@@ -100,6 +116,13 @@ function App() {
                         path="/product-list" 
                         element={<ProductList products={products} onDeleteProduct={handleDeleteProduct} />} 
                     />
+                    {/* Edit Product Route */}
+                    <Route 
+    path="/edit-product/:id" 
+    element={<EditProduct products={products} onUpdateProduct={handleUpdateProduct} />} 
+/>
+
+                   
 
                     {/* Add Client Route */}
                     <Route 
@@ -123,6 +146,10 @@ function App() {
                     <Route 
                         path="/customer-list" 
                         element={<CustomerList customers={customers} onDeleteCustomer={handleDeleteCustomer} />}  
+                    />
+                     <Route 
+                        path="/edit-customer/:id" 
+                        element={<EditCustomer customers={customers} onUpdateCustomer={handleUpdateCustomer} />} 
                     />
 
                     {/* Add Executive Route */}
@@ -181,3 +208,7 @@ function App() {
 }
 
 export default App;
+
+
+
+

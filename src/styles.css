@@ -13,75 +13,125 @@ h1, h2, h3 {
 
 /* Navbar Styles */
 .navbar {
-    background-color: #343a40; /* Dark background */
+    background-color: #343a40;
     color: #fff;
     padding: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 10;
 }
 
 .navbar-title {
-    margin: 0;
-    color: #e0e0e0; /* Light grey for title */
+    color: #e0e0e0;
     font-size: 1.5rem;
+    margin: 0;
 }
 
 .navbar-links {
     display: flex;
     gap: 20px;
+    transition: all 0.3s ease-in-out;
 }
 
 .navbar-links a {
     color: #f8f9fa;
     text-decoration: none;
     font-size: 1rem;
-    transition: color 0.3s;
 }
 
 .navbar-links a:hover {
-    color: #ffc107; /* Gold hover color */
+    color: #ffc107;
     text-decoration: underline;
+}
+/* Hamburger Icon */
+.hamburger-icon {
+    display: none; /* Hidden on larger screens */
+    flex-direction: column;
+    cursor: pointer;
+    z-index: 20; /* Ensure it's above the navbar */
+    padding: 3px;
+}
+
+.hamburger-icon .bar {
+    width: 20px; /* Adjust width to make it shorter */
+    height: 3px; /* Adjust height to make it thinner */
+    background-color: #fff;
+    margin: -10px 0;
+    transition: 0.4s;
 }
 
 /* Dashboard Styles */
 .dashboard-container {
     text-align: center;
     padding: 20px;
-    background-color: #ffffff;
+    background-color: #cccab4;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     border-radius: 8px;
     margin: 20px auto;
-    max-width: 800px;
+   width: 1200px;
+   height: 550px;
 }
 
 .dashboard-title {
     font-size: 2rem;
     color: #333;
-    margin-bottom: 20px;
+    
+    margin-top: 30px;
 }
 
 .button-container {
+    margin-top: 10px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 50px;
 }
-
-.button {
-    gap: 50px;
-    padding: 15px 30px;
-    font-size: 1rem;
+.button-container-1{
+    display: flex;
+    margin-top: 50px;
+    gap: 10px;  /* Adjust gap as needed */
+    justify-content: center;  /* Optional, to center the buttons */
+}
+.button-dash {
+    
+    padding: 40px 50px;
+    font-size: 1.335rem;
     color: #ffffff;
-    background-color: #28a745;
+    background-color: #1eb14f;
     border: none;
-    border-radius: 0px;
+    border-radius: 5px;
     text-decoration: none;
     cursor: pointer;
     transition: background-color 0.3s;
+    transition: background-color 0.5s ease, transform 0.5s ease; 
 }
-
+.button-dash-1 {
+    
+    padding: 40px 50px;
+    font-size: 1.335rem;
+    color: #ffffff;
+    background-color: #c58714;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    transition: background-color 0.5s ease, transform 0.5s ease; 
+}
+.button-dash:hover {
+    background-color:  #218838; /* Darker green on hover */
+    border-radius: 20px;
+    
+    transform: scale(1.08);
+}
+.button-dash-1:hover {
+    background-color: #a17d2e; /* Darker green on hover */
+    border-radius: 20px;
+    
+    transform: scale(1.08);
+}
 .button:hover {
     background-color: #218838; /* Darker green on hover */
 }
@@ -151,3 +201,77 @@ th {
 tr:hover {
     background-color: #f1f1f1;
 }
+
+/* Mobile View Styles */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .navbar-links {
+        display: none; /* Hidden on mobile by default */
+        flex-direction: column;
+        gap: 10px;
+        position: absolute;
+        top: 60px; /* Positioned under the navbar */
+        left: 0;
+        width: 100%;
+        background-color: #343a40;
+        padding: 1rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 15; /* Ensure it's above other content */
+    }
+
+    .navbar-links.open {
+        display: flex; /* Show dropdown when open */
+    }
+
+    .hamburger-icon {
+        display: flex; /* Show hamburger icon on mobile */
+    }
+    .navbar-title {
+        font-size: 1.2rem;
+    }
+
+    .navbar-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .dashboard-container {
+        width: 90%;
+        padding: 10px;
+    }
+
+    .dashboard-title {
+        font-size: 1.5rem;
+    }
+
+    .button-container, .button-container-1 {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .button-dash, .button-dash-1 {
+        padding: 15px 20px;
+        font-size: 1rem;
+    }
+
+    form {
+        padding: 15px;
+        margin: 10px;
+    }
+
+    table, th, td {
+        font-size: 0.9rem;
+    }
+
+    button {
+        padding: 8px 12px;
+    }
+}
+
+
+
+
+

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const ProductList = ({ products, onDeleteProduct }) => {
     const [selectedType, setSelectedType] = useState('all');
@@ -29,7 +30,7 @@ const ProductList = ({ products, onDeleteProduct }) => {
                     <tr>
                         <th>Product Type</th>
                         <th>Product Name</th>
-                        <th>Action</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,6 +40,11 @@ const ProductList = ({ products, onDeleteProduct }) => {
                                 <td>{product.productType}</td>
                                 <td>{product.productName}</td>
                                 <td>
+                                    {/* Edit Button */}
+                                    <Link to={`/edit-product/${product.id}`}> {/* Use product.id to identify the product */}
+                                        <button>Edit</button>
+                                    </Link>
+                                    {/* Delete Button */}
                                     <button onClick={() => onDeleteProduct(index)}>Delete</button>
                                 </td>
                             </tr>

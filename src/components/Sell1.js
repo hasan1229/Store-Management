@@ -134,8 +134,8 @@ function Sell({ customers, executives, products, onAddSale }) {
                         />
                     </label>
 
-                    <label>
-                        Total: {item.total}
+                    <label style={{ marginLeft: '70px' }}>
+                            Total: {item.total}
                     </label>
 
                     <button

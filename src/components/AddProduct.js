@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+
 const AddProduct = ({ onAddProduct, onCancel }) => {
     const [products, setProducts] = useState([{ productType: 'bar phone', productName: '' }]);
 
