@@ -14,6 +14,7 @@ import Purchase from './components/Purchase';
 import PurchaseList from './components/PurchaseList';
 import AddExecutive from './components/AddExecutive';
 import ExecutiveList from './components/ExecutiveList';
+import EditExecutive from './components/EditExecutive';
 import Sell from './components/Sell1';  // Import Sell component
 import SellProductList from './components/SellProductList';  // Import SellProductList component
 import './styles.css';
@@ -88,6 +89,12 @@ function App() {
         const newExecutives = executives.filter((_, i) => i !== index);
         setExecutives(newExecutives);
     };
+            // Function to update a executive
+            const handleUpdateExecutive  = (index, updatedExecutive ) => {
+                const updatedExecutives = [...executives];
+                updatedExecutives[index] = updatedExecutive;
+                setExecutives(updatedExecutives);
+            };
 
     // Function to add a sale
     const handleAddSale = (sale) => {
@@ -118,9 +125,9 @@ function App() {
                     />
                     {/* Edit Product Route */}
                     <Route 
-    path="/edit-product/:id" 
-    element={<EditProduct products={products} onUpdateProduct={handleUpdateProduct} />} 
-/>
+                    path="/edit-product/:id" 
+                    element={<EditProduct products={products} onUpdateProduct={handleUpdateProduct} />} 
+                    />
 
                    
 
@@ -162,6 +169,10 @@ function App() {
                     <Route 
                         path="/executive-list" 
                         element={<ExecutiveList executives={executives} onDeleteExecutive={handleDeleteExecutive} />} 
+                    />
+                                         <Route 
+                        path="/edit-executive/:id" 
+                        element={<EditExecutive executives={executives} onUpdateExecutive={handleUpdateExecutive} />} 
                     />
 
                     {/* Purchase Route */}
@@ -208,7 +219,4 @@ function App() {
 }
 
 export default App;
-
-
-
 

@@ -43,6 +43,7 @@ const ExecutiveList = ({ executives, onDeleteExecutive }) => {
                                 <td>{executive.address}</td>
                                 <td>
                                     <button onClick={() => onDeleteExecutive(index)}>Delete</button>
+                                    <Link to={`/edit-executive/${index}`}><button>Edit</button></Link>
                                 </td>
                             </tr>
                         ))
