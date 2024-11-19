@@ -4,28 +4,34 @@ import Navbar from './components/Navbar';
 import Dashboard from './components/Dashboard';
 import AddProduct from './components/AddProduct';
 import ProductList from './components/ProductList';
-import EditProduct from './components/EditProduct';  // Import EditProduct component
+import EditProduct from './components/EditProduct';
 import AddClient from './components/AddClient';
 import ClientList from './components/ClientList';
 import AddCustomer from './components/AddCustomer';
 import CustomerList from './components/CustomerList';
-import EditCustomer from './components/EditCustomer';  // Import EditCustomer component
+import EditCustomer from './components/EditCustomer';
 import Purchase from './components/Purchase';
 import PurchaseList from './components/PurchaseList';
 import AddExecutive from './components/AddExecutive';
 import ExecutiveList from './components/ExecutiveList';
 import EditExecutive from './components/EditExecutive';
-import Sell from './components/Sell1';  // Import Sell component
-import SellProductList from './components/SellProductList';  // Import SellProductList component
+import Sell from './components/Sell1';
+import SellProductList from './components/SellProductList';
+import AddExpense from './components/AddExpense';
+import ExpenseList from './components/ExpenseList';
+import AddExpenseType from './components/AddExpenseType';
+import Stock from './components/Stock';
 import './styles.css';
 
 function App() {
-    const [products, setProducts] = useState([]);        // Holds the list of products
-    const [clients, setClients] = useState([]);          // Holds the list of clients
-    const [customers, setCustomers] = useState([]);      // Holds the list of customers
-    const [purchases, setPurchases] = useState([]);      // Holds the list of purchases
-    const [executives, setExecutives] = useState([]);    // Holds the list of executives
-    const [sales, setSales] = useState([]);              // Holds the list of sales
+    const [products, setProducts] = useState([]);
+    const [clients, setClients] = useState([]);
+    const [customers, setCustomers] = useState([]);
+    const [purchases, setPurchases] = useState([]);
+    const [executives, setExecutives] = useState([]);
+    const [sales, setSales] = useState([]);
+    const [expenses, setExpenses] = useState([]);
+    const [expenseTypes, setExpenseTypes] = useState([]);
 
     // Function to add new purchases
     const handleAddPurchase = (newPurchases) => {
@@ -42,14 +48,14 @@ function App() {
         const newProducts = products.filter((_, i) => i !== index);
         setProducts(newProducts);
     };
+
     // Function to update a product
     const handleUpdateProduct = (id, updatedProduct) => {
-        const updatedProducts = products.map(product => 
+        const updatedProducts = products.map(product =>
             product.id === id ? { ...product, ...updatedProduct } : product
         );
         setProducts(updatedProducts);
     };
-
 
     // Function to add a client
     const handleAddClient = (client) => {
@@ -72,12 +78,13 @@ function App() {
         const newCustomers = customers.filter((_, i) => i !== index);
         setCustomers(newCustomers);
     };
-        // Function to update a customer
-        const handleUpdateCustomer = (index, updatedCustomer) => {
-            const updatedCustomers = [...customers];
-            updatedCustomers[index] = updatedCustomer;
-            setCustomers(updatedCustomers);
-        };
+
+    // Function to update a customer
+    const handleUpdateCustomer = (index, updatedCustomer) => {
+        const updatedCustomers = [...customers];
+        updatedCustomers[index] = updatedCustomer;
+        setCustomers(updatedCustomers);
+    };
 
     // Function to add an executive
     const handleAddExecutive = (executive) => {
@@ -89,16 +96,39 @@ function App() {
         const newExecutives = executives.filter((_, i) => i !== index);
         setExecutives(newExecutives);
     };
-            // Function to update a executive
-            const handleUpdateExecutive  = (index, updatedExecutive ) => {
-                const updatedExecutives = [...executives];
-                updatedExecutives[index] = updatedExecutive;
-                setExecutives(updatedExecutives);
-            };
+
+    // Function to update an executive
+    const handleUpdateExecutive = (index, updatedExecutive) => {
+        const updatedExecutives = [...executives];
+        updatedExecutives[index] = updatedExecutive;
+        setExecutives(updatedExecutives);
+    };
 
     // Function to add a sale
     const handleAddSale = (sale) => {
         setSales((prevSales) => [...prevSales, sale]);
+    };
+
+    // Function to add an expense
+    const handleAddExpense = (newExpense) => {
+        setExpenses((prevExpenses) => [...prevExpenses, newExpense]);
+    };
+
+    // Function to edit an expense
+    const handleEditExpense = (index, updatedExpense) => {
+        const updatedExpenses = [...expenses];
+        updatedExpenses[index] = updatedExpense;
+        setExpenses(updatedExpenses);
+    };
+
+    // Function to delete an expense
+    const handleDeleteExpense = (index) => {
+        setExpenses((prevExpenses) => prevExpenses.filter((_, i) => i !== index));
+    };
+
+    // Function to add an expense type
+    const handleAddExpenseType = (newExpenseType) => {
+        setExpenseTypes((prevExpenseTypes) => [...prevExpenseTypes, newExpenseType]);
     };
 
     return (
@@ -106,7 +136,7 @@ function App() {
             <div>
                 <Navbar />
                 <Routes>
-                    {/* Navigate to the dashboard by default */}
+                    {/* Default Route to redirect to Dashboard */}
                     <Route path="/" element={<Navigate to="/dashboard" />} />
 
                     {/* Dashboard Route */}
@@ -123,13 +153,12 @@ function App() {
                         path="/product-list" 
                         element={<ProductList products={products} onDeleteProduct={handleDeleteProduct} />} 
                     />
+
                     {/* Edit Product Route */}
                     <Route 
-                    path="/edit-product/:id" 
-                    element={<EditProduct products={products} onUpdateProduct={handleUpdateProduct} />} 
+                        path="/edit-product/:id" 
+                        element={<EditProduct products={products} onUpdateProduct={handleUpdateProduct} />} 
                     />
-
-                   
 
                     {/* Add Client Route */}
                     <Route 
@@ -154,7 +183,9 @@ function App() {
                         path="/customer-list" 
                         element={<CustomerList customers={customers} onDeleteCustomer={handleDeleteCustomer} />}  
                     />
-                     <Route 
+
+                    {/* Edit Customer Route */}
+                    <Route 
                         path="/edit-customer/:id" 
                         element={<EditCustomer customers={customers} onUpdateCustomer={handleUpdateCustomer} />} 
                     />
@@ -170,7 +201,9 @@ function App() {
                         path="/executive-list" 
                         element={<ExecutiveList executives={executives} onDeleteExecutive={handleDeleteExecutive} />} 
                     />
-                                         <Route 
+
+                    {/* Edit Executive Route */}
+                    <Route 
                         path="/edit-executive/:id" 
                         element={<EditExecutive executives={executives} onUpdateExecutive={handleUpdateExecutive} />} 
                     />
@@ -202,7 +235,7 @@ function App() {
                                 customers={customers} 
                                 executives={executives} 
                                 products={products} 
-                                onAddSale={handleAddSale}    // Pass handleAddSale to add sales
+                                onAddSale={handleAddSale}    
                             />
                         } 
                     />
@@ -210,8 +243,29 @@ function App() {
                     {/* Sell Product List Route */}
                     <Route 
                         path="/sell-product-list" 
-                        element={<SellProductList sales={sales} />} // Pass sales data to SellProductList
+                        element={<SellProductList sales={sales} />} 
                     />
+
+                    {/* Add Expense Type Route */}
+                    <Route
+                        path="/add-expense-type"
+                        element={<AddExpenseType onAddExpenseType={handleAddExpenseType} onCancel={() => {}} />}
+                    />
+                    {/* Add Expense Route */}
+                    <Route
+                        path="/add-expense"
+                        element={<AddExpense expenseTypes={expenseTypes} onAddExpense={handleAddExpense} />}
+                    />
+                    {/* Expense List Route */}
+                    <Route
+                        path="/expense-list"
+                        element={<ExpenseList expenses={expenses} onEditExpense={handleEditExpense} onDeleteExpense={handleDeleteExpense} />}
+                    />
+                     {/* Stock Route */}
+                     
+
+                      <Route path="/stock" element={<Stock purchases={purchases} sales={sales} products={products} />} />
+
                 </Routes>
             </div>
         </Router>
@@ -219,4 +273,3 @@ function App() {
 }
 
 export default App;
-
