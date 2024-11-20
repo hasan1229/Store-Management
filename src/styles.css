@@ -1,5 +1,6 @@
-/* General Styles */
-body {
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+
+.body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -12,6 +13,7 @@ h1, h2, h3 {
 }
 
 /* Navbar Styles */
+
 .navbar {
     background-color: #343a40;
     color: #fff;
@@ -27,6 +29,7 @@ h1, h2, h3 {
     color: #e0e0e0;
     font-size: 1.5rem;
     margin: 0;
+   margin-left: 50px; 
 }
 
 .navbar-links {
@@ -63,23 +66,140 @@ h1, h2, h3 {
 }
 
 /* Dashboard Styles */
+
+
+/* General container styling */
 .dashboard-container {
-    text-align: center;
-    padding: 20px;
-    background-color: #cccab4;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    border-radius: 8px;
-    margin: 20px auto;
-   width: 1200px;
-   height: 550px;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background-color: #f4f5f7; /* Light background for contrast */
 }
 
-.dashboard-title {
-    font-size: 2rem;
-    color: #333;
-    
-    margin-top: 30px;
+/* Sidebar styling */
+.dashboard-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #2c3e50; /* Dark sidebar */
+    color: #ecf0f1; /* Light text */
+    padding-top: 20px;
+    transform: translateX(-100%); /* Initially hidden */
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Smooth animation */
+    z-index: 1000;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
 }
+
+.dashboard-sidebar.open {
+    transform: translateX(0); /* Slide in */
+}
+
+.sidebar-toggle {
+    position: absolute;
+    margin-left: -8px;
+    top: 15px;
+    left: 15px;
+    background-color: #3498db;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 5px;
+    z-index: 1100; /* Above other elements */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+}
+
+.sidebar-toggle:hover {
+    background-color: #2980b9;
+}
+
+.dashboard-title-sidebar {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-links li {
+    margin: 10px 0;
+}
+
+.dashboard-sidebar-link {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 12px 20px;
+    display: block;
+    transition: background-color 0.3s ease;
+    border-radius: 4px;
+}
+
+.dashboard-sidebar-link:hover {
+    background-color: #34495e;
+}
+
+/* Main content area styling */
+.dashboard-main-content {
+    flex: 1;
+    margin-left: 0;
+    padding: 20px;
+    transition: margin-left 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Smooth shift */
+}
+
+.dashboard-main-content.shifted {
+    margin-left: 250px; /* Shift to accommodate sidebar width */
+}
+
+.dashboard-main-title {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.other-buttons {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.dashboard-main-link {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 15px;
+    color: #3498db;
+    background-color: #ecf0f1;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-main-link:hover {
+    background-color: #3498db;
+    color: #fff;
+}
+
+/* General Layout */
+
+
+
+
+
+/* Container for buttons */
+
+
 
 .button-container {
     margin-top: 10px;
