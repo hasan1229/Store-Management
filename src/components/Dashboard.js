@@ -1,32 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    const toggleSidebar = () => {
+        setSidebarOpen(!sidebarOpen); // Toggle sidebar open/close
+    };
+
     return (
         <div className="dashboard-container">
-            <h1 className="dashboard-title">Dashboard</h1>
-            <div className="button-container">
-                <div className="button-container-1">
-                <Link to="/add-product" className="button-dash">Add Product</Link>
-                <Link to="/add-client" className="button-dash">Add Client</Link>
-                <Link to="/purchase" className="button-dash">Make a Purchase</Link>
-                <Link to="/add-executive" className="button-dash">Add Executive</Link>
-                <Link to="/add-customer" className="button-dash">Add Customer</Link>
-                <Link to="/sell" className="button-dash-1">Sell</Link>
-                <Link to="/stock" className="button-dash-1">stock</Link>
-                </div>
-                <div className="button-container-1">
-                <Link to="/product-list" className="button-dash">Product List</Link>
-                <Link to="/client-list" className="button-dash">Client List</Link>
-                <Link to="/purchase-list" className="button-dash">Purchase list</Link>
-                <Link to="/executive-list" className="button-dash">Executive List</Link>
-                <Link to="/customer-list" className="button-dash">Customer List</Link>
-                <Link to="/sell-product-list" className="button-dash-1">Sold List</Link>
-                <Link to="/expense-list" className="button-dash">expense-list</Link>
-                <Link to="/add-expense" className="button-dash">add-expense</Link>
-                <Link to="/add-expense-type" className="button-dash-1">add-expense-type</Link>
-                
+            {/* Sidebar */}
+            <div className={`dashboard-sidebar ${sidebarOpen ? 'open' : ''}`}>
+                <h1 className="dashboard-title-sidebar">Dashboard</h1>
+                <ul className="sidebar-links">
+                    <li><Link to="/add-product" className="dashboard-sidebar-link">Add Product</Link></li>
+                    <li><Link to="/add-client" className="dashboard-sidebar-link">Add Client</Link></li>
+                    <li><Link to="/purchase" className="dashboard-sidebar-link">Make a Purchase</Link></li>
+                    <li><Link to="/add-executive" className="dashboard-sidebar-link">Add Executive</Link></li>
+                    <li><Link to="/add-customer" className="dashboard-sidebar-link">Add Customer</Link></li>
+                    <li><Link to="/sell" className="dashboard-sidebar-link">Sell</Link></li>
+                    <li><Link to="/stock" className="dashboard-sidebar-link">Stock</Link></li>
+                </ul>
+            </div>
 
+            {/* Toggle button for sidebar */}
+            <button className="sidebar-toggle" onClick={toggleSidebar}>
+                <i className="fas fa-bars"></i> {/* Hamburger icon */}
+            </button>
+
+            {/* Main Content Area */}
+            <div className={`dashboard-main-content ${sidebarOpen ? 'shifted' : ''}`}>
+                <h2 className="dashboard-main-title">Welcome to your Dashboard</h2>
+                <p>Here you can manage products, clients, and more!</p>
+                {/* Other Buttons outside the sidebar */}
+                <div className="other-buttons">
+                    <Link to="/product-list" className="dashboard-main-link">Product List</Link>
+                    <Link to="/client-list" className="dashboard-main-link">Client List</Link>
+                    <Link to="/purchase-list" className="dashboard-main-link">Purchase List</Link>
+                    <Link to="/executive-list" className="dashboard-main-link">Executive List</Link>
+                    <Link to="/customer-list" className="dashboard-main-link">Customer List</Link>
+                    <Link to="/expense-list" className="dashboard-main-link">Expense List</Link>
+                    <Link to="/add-expense" className="dashboard-main-link">Add Expense</Link>
+                    <Link to="/add-expense-type" className="dashboard-main-link">Add Expense Type</Link>
                 </div>
             </div>
         </div>
