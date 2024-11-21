@@ -21,6 +21,7 @@ import AddExpense from './components/AddExpense';
 import ExpenseList from './components/ExpenseList';
 import AddExpenseType from './components/AddExpenseType';
 import Stock from './components/Stock';
+import Profit from './components/Profit'; // Import Profit component
 import './styles.css';
 
 function App() {
@@ -261,11 +262,18 @@ function App() {
                         path="/expense-list"
                         element={<ExpenseList expenses={expenses} onEditExpense={handleEditExpense} onDeleteExpense={handleDeleteExpense} />}
                     />
-                     {/* Stock Route */}
-                     
 
-                      <Route path="/stock" element={<Stock purchases={purchases} sales={sales} products={products} />} />
+                    {/* Stock Route */}
+                    <Route 
+                        path="/stock" 
+                        element={<Stock purchases={purchases} sales={sales} products={products} />} 
+                    />
 
+                    {/* Profit Report Route */}
+                    <Route 
+                        path="/profit-report" 
+                        element={<Profit sales={sales} purchases={purchases} expenses={expenses} executives={executives} />} 
+                    />
                 </Routes>
             </div>
         </Router>
