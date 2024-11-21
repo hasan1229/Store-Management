@@ -1,79 +1,99 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Stock = ({ purchases, sales, products }) => {
-    const [stock, setStock] = useState({});
+    const [stock, setStock] = useState([]);
+    const [selectedType, setSelectedType] = useState('all');
 
-    // Check if products is defined before using it
-    const getUnitPrice = (product) => {
-        if (!products) {
-            console.error('Products data is not available');
-            return 0;
-        }
+    // Get unique product types from the product list
+    const productTypes = ['all', ...new Set(products.map(product => product.productType))];
 
-        // Log the products array to see the structure
-        console.log('Available products:', products);
+    // Filter stock by product type
+    const filteredStock = selectedType === 'all' ? stock : stock.filter(item => item.productType === selectedType);
 
-        const foundProduct = products.find((prod) => prod.name === product);
-        
-        if (!foundProduct) {
-            console.error(`Unit price for product "${product}" not found`);
-            return 0;
-        }
-
-        // Log the found product and its unit price
-        console.log(`Found product: ${foundProduct.name}, Unit Price: ${foundProduct.unitPrice}`);
-        return foundProduct.unitPrice;
-    };
-
-    // Update stock whenever purchases or sales data changes
     useEffect(() => {
-        const updatedStock = {};
+        const updatedStock = [];
 
-        // Update stock based on purchases
-        purchases.forEach((purchase) => {
-            const { product, quantity } = purchase;
-            if (!updatedStock[product]) updatedStock[product] = { quantity: 0, unitPrice: 0 };
-            updatedStock[product].quantity += quantity;
+        // Handle stock for purchases (increases stock)
+        purchases.forEach(purchase => {
+            const existingProduct = updatedStock.find(item => item.product === purchase.product);
+            if (existingProduct) {
+                // Update unit price if it differs, recalculate total value
+                if (existingProduct.unitPrice !== purchase.unitPrice) {
+                    existingProduct.unitPrice = purchase.unitPrice; // New price based on purchase
+                }
+                existingProduct.quantity += purchase.quantity;
+                existingProduct.totalValue = existingProduct.unitPrice * existingProduct.quantity;
+            } else {
+                const product = products.find(p => p.productName === purchase.product); // Find product to get type
+                updatedStock.push({
+                    product: purchase.product,
+                    productType: product ? product.productType : 'Unknown',
+                    unitPrice: purchase.unitPrice,
+                    quantity: purchase.quantity,
+                    totalValue: purchase.unitPrice * purchase.quantity
+                });
+            }
         });
 
-        // Update stock based on sales
-        sales.forEach((sale) => {
-            sale.items.forEach((item) => {
-                const { product, quantity } = item;
-                if (!updatedStock[product]) updatedStock[product] = { quantity: 0, unitPrice: 0 };
-                updatedStock[product].quantity -= quantity;
+        // Handle stock for sales (decreases stock)
+        sales.forEach(sale => {
+            sale.items.forEach(item => {
+                const existingProduct = updatedStock.find(product => product.product === item.product);
+                if (existingProduct) {
+                    existingProduct.quantity -= item.quantity;
+                    existingProduct.totalValue = existingProduct.unitPrice * existingProduct.quantity;
+                }
             });
         });
 
         setStock(updatedStock);
-    }, [purchases, sales]);
+    }, [purchases, sales, products]);
 
     return (
         <div>
-            <h2>Stock Report</h2>
+            <h2>Product Stock</h2>
+
+            {/* Product Type Filter */}
+            <div>
+                <label>
+                    Filter by Product Type:
+                    <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
+                        {productTypes.map((type, index) => (
+                            <option key={index} value={type}>
+                                {type}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+            </div>
+
+            {/* Stock Table */}
             <table>
                 <thead>
                     <tr>
                         <th>Product</th>
+                        <th>Product Type</th>
                         <th>Unit Price</th>
                         <th>Quantity in Stock</th>
                         <th>Total Value</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {Object.entries(stock).map(([product, { quantity }]) => {
-                        const unitPrice = getUnitPrice(product);
-                        const totalValue = unitPrice * quantity;
-
-                        return (
-                            <tr key={product}>
-                                <td>{product}</td>
-                                <td>{unitPrice.toFixed(2)}</td>
-                                <td>{quantity}</td>
-                                <td>{totalValue.toFixed(2)}</td>
+                    {filteredStock.length > 0 ? (
+                        filteredStock.map((item, index) => (
+                            <tr key={index}>
+                                <td>{item.product}</td>
+                                <td>{item.productType}</td>
+                                <td>{item.unitPrice}tk</td>
+                                <td>{item.quantity}</td>
+                                <td>{item.totalValue}tk</td>
                             </tr>
-                        );
-                    })}
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="5" style={{ textAlign: 'center' }}>No products in stock.</td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
         </div>

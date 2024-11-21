@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-const PurchaseList = ({ purchases }) => {
+
+const PurchaseList = ({ purchases, updateStock }) => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [filteredPurchases, setFilteredPurchases] = useState(purchases);
 
-    // Function to filter purchases based on the date range
-    const filterPurchases = () => {
+    // Memoized function to filter purchases based on the date range
+    const filterPurchases = useCallback(() => {
         if (!startDate && !endDate) {
             setFilteredPurchases(purchases);
             return;
@@ -21,17 +22,24 @@ const PurchaseList = ({ purchases }) => {
         });
 
         setFilteredPurchases(filtered);
-    };
+    }, [startDate, endDate, purchases]);
 
-    // Filter purchases whenever the date range or purchases change
+    // Update stock whenever purchases change
     useEffect(() => {
         filterPurchases();
-    }, [startDate, endDate, purchases]);
+    }, [startDate, endDate, purchases, filterPurchases]);  // Add filterPurchases to the dependencies
+
+    useEffect(() => {
+        // Update stock whenever purchases change
+        if (updateStock) {
+            updateStock(purchases);
+        }
+    }, [purchases, updateStock]);
 
     return (
         <div>
             <h2>Purchase List</h2>
-            
+
             {/* Date range filter */}
             <div>
                 <label>
@@ -53,7 +61,7 @@ const PurchaseList = ({ purchases }) => {
             </div>
 
             {/* Purchases Table */}
-            <table> 
+            <table>
                 <thead>
                     <tr>
                         <th>Date</th>
@@ -77,7 +85,9 @@ const PurchaseList = ({ purchases }) => {
                     ))}
                 </tbody>
             </table>
-            <button type="button " ><Link to="/"className="button-link">Dashboard</Link></button>
+            <button type="button">
+                <Link to="/" className="button-link">Dashboard</Link>
+            </button>
         </div>
     );
 };

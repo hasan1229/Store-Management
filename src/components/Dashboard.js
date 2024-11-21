@@ -43,6 +43,7 @@ const Dashboard = () => {
                     <Link to="/expense-list" className="dashboard-main-link">Expense List</Link>
                     <Link to="/add-expense" className="dashboard-main-link">Add Expense</Link>
                     <Link to="/add-expense-type" className="dashboard-main-link">Add Expense Type</Link>
+                    <Link to="/profit-report" className="dashboard-main-link">profit-report</Link>
                 </div>
             </div>
         </div>
